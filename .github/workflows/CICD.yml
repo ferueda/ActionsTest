@@ -22,18 +22,16 @@ jobs:
       
       - name: Environments
         run: echo ${{ matrix.env }}
-      
-      - name: Upcase environment
-        run: |
-          echo "envUpper=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
           
-      - name: use envUpper
-        run: echo ${envUpper}
+      - id: toUpperCase
+        run: |
+          export upperCaseValue = $(echo "console.log('${{ matrix.env }}'.toUpperCase());" | node)
+          echo ::set-output name=environment::$upperCaseValue
 
       - name: Compile
         run: echo key is ${{ secrets.key }}
         
       - name: Configure creds
         env:
-          envUpper: ${envUpper}
-        run: echo ${{ format('AWS_{0}_ACCESS_KEY_ID', env.envUpper) }}
+          ENVIRONMENT: ${{ steps.toUpperCase.outputs.environment }}
+        run: echo ${{ format('AWS_{0}_ACCESS_KEY_ID', env.ENVIRONMENT) }}
