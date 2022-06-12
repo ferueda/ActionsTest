@@ -34,4 +34,6 @@ jobs:
         run: echo key is ${{ secrets.key }}
         
       - name: Configure creds
+        env:
+          envUpper: ${{ envUpper }}
         run: echo ${{ format('AWS_{0}_ACCESS_KEY_ID', envUpper) }}
