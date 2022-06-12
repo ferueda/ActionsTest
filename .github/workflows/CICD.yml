@@ -21,11 +21,11 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Environments
-        run: echo ${{ matrix.environment }}
+        run: echo ${{ matrix.env }}
       
       - id: toUpperCase
         run: |
-          export upperCaseValue=$(echo "console.log('${{ matrix.environment }}'.toUpperCase());" | node)
+          export upperCaseValue=$(echo "console.log('${{ matrix.env }}'.toUpperCase());" | node)
           echo ::set-output name=environment::$upperCaseValue
 
       - name: Compile
