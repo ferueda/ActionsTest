@@ -24,7 +24,11 @@ jobs:
         run: echo ${{ matrix.env }}
       
       - name: Upcase environment
-        run: envUpper=$(echo 'console.log("${{ matrix.env }}".toUpperCase())' | node -)
+        run: |
+          echo "envUpper=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+          
+      - name: use envUpper
+        run: echo ${envUpper}
 
       - name: Compile
         run: echo key is ${{ secrets.key }}
