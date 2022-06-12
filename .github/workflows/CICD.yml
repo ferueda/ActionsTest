@@ -19,6 +19,19 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Environments
+        run: echo ${{ matrix.env }}
+          
+      - id: toUpperCase
+        run: |
+          export upperCaseValue=$(echo "console.log('${{ matrix.env }}'.toUpperCase());" | node)
+          echo ::set-output name=environment::$upperCaseValue
 
       - name: Compile
         run: echo key is ${{ secrets.key }}
+        
+      - name: Configure creds
+        env:
+          ENVIRONMENT: ${{ steps.toUpperCase.outputs.environment }}
+        run: echo ${{ format('AWS_{0}_ACCESS_KEY_ID', env.ENVIRONMENT) }}
