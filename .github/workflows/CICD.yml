@@ -20,6 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Environments
+        run: echo ${{ matrix.environment }}
+      
       - id: toUpperCase
         run: |
           export upperCaseValue=$(echo "console.log('${{ matrix.environment }}'.toUpperCase());" | node)
