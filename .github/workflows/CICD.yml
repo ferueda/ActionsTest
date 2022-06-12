@@ -22,7 +22,7 @@ jobs:
       
       - id: toUpperCase
         run: |
-          export upperCaseValue = $(echo "console.log('${{ matrix.environment }}'.toUpperCase());" | node)
+          export upperCaseValue=$(echo "console.log('${{ matrix.environment }}'.toUpperCase());" | node)
           echo ::set-output name=environment::$upperCaseValue
 
       - name: Compile
